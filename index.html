@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catarina AI - Your AI-Powered Desktop Assistant</title>
+  <meta name="description" content="Catarina AI brings the power of Claude directly to your desktop. Code faster, think clearer, build better." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="navbar" id="navbar">
+    <nav class="navbar__inner container">
+      <a href="/" class="navbar__logo">
+        <span class="navbar__logo-icon">&#9670;</span>
+        Catarina AI
+      </a>
+      <ul class="navbar__links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="/downloads.html">Downloads</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-toggle__icon theme-toggle__icon--sun">&#9788;</span>
+          <span class="theme-toggle__icon theme-toggle__icon--moon">&#9790;</span>
+        </button>
+        <a href="/downloads.html" class="btn btn--sm btn--primary navbar__cta">Download</a>
+      </div>
+      <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul class="mobile-menu__links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="/downloads.html">Downloads</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="/downloads.html" class="btn btn--primary">Download Now</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero__glow"></div>
+      <div class="container hero__inner">
+        <div class="hero__badge animate-on-scroll">
+          <span class="hero__badge-dot"></span>
+          Now available for macOS, Windows &amp; Linux
+        </div>
+        <h1 class="hero__title animate-on-scroll">
+          Your AI-Powered<br />
+          <span class="gradient-text">Desktop Assistant</span>
+        </h1>
+        <p class="hero__tagline animate-on-scroll">
+          Catarina AI brings the power of Claude directly to your desktop.<br />
+          Code faster, think clearer, build better.
+        </p>
+        <div class="hero__actions animate-on-scroll">
+          <a href="/downloads.html" class="btn btn--primary btn--lg">
+            <span class="btn__icon">&#8595;</span>
+            Download Now
+          </a>
+          <a href="https://github.com/jeancatarina/catarina-ai" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--lg">
+            <span class="btn__icon">&#9733;</span>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <p class="section-label">Features</p>
+          <h2 class="section-title">Everything you need,<br /><span class="gradient-text">nothing you don't</span></h2>
+          <p class="section-subtitle">Built for developers who want AI assistance without leaving their workflow.</p>
+        </div>
+        <div class="features__grid">
+          <div class="card animate-on-scroll">
+            <div class="card__icon">&#128640;</div>
+            <h3 class="card__title">AI-Powered Coding</h3>
+            <p class="card__description">Integrated Claude Code CLI for intelligent code assistance directly in your workflow. Get suggestions, refactors, and explanations in real time.</p>
+          </div>
+          <div class="card animate-on-scroll">
+            <div class="card__icon">&#128256;</div>
+            <h3 class="card__title">Git Workspace Management</h3>
+            <p class="card__description">Worktree-based isolation keeps your projects organized and conflict-free. Switch contexts instantly without stashing changes.</p>
+          </div>
+          <div class="card animate-on-scroll">
+            <div class="card__icon">&#128172;</div>
+            <h3 class="card__title">Real-time Streaming</h3>
+            <p class="card__description">Watch AI responses appear instantly with native Tauri event streaming. No waiting for complete responses before you start reading.</p>
+          </div>
+          <div class="card animate-on-scroll">
+            <div class="card__icon">&#128421;</div>
+            <h3 class="card__title">Cross-Platform</h3>
+            <p class="card__description">Native performance on macOS, Windows, and Linux with Tauri 2. Small binary size, low memory footprint, blazing fast startup.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshot / Preview Section -->
+    <section class="preview">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <p class="section-label">Preview</p>
+          <h2 class="section-title">See it in action</h2>
+        </div>
+        <div class="preview__window animate-on-scroll">
+          <div class="preview__titlebar">
+            <span class="preview__dot preview__dot--red"></span>
+            <span class="preview__dot preview__dot--yellow"></span>
+            <span class="preview__dot preview__dot--green"></span>
+            <span class="preview__titlebar-text">Catarina AI</span>
+          </div>
+          <div class="preview__content">
+            <div class="preview__placeholder">
+              <div class="preview__placeholder-icon">&#9670;</div>
+              <p class="preview__placeholder-title">App Preview Coming Soon</p>
+              <p class="preview__placeholder-sub">Screenshots and interactive demos will be available with the next release.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <p class="section-label">Pricing</p>
+          <h2 class="section-title">Simple, transparent pricing</h2>
+          <p class="section-subtitle">Start for free. Upgrade when you're ready.</p>
+        </div>
+        <div class="pricing__grid">
+          <div class="card card--pricing animate-on-scroll">
+            <div class="card__pricing-header">
+              <h3 class="card__pricing-name">Free</h3>
+              <div class="card__pricing-price">
+                <span class="card__pricing-amount">$0</span>
+                <span class="card__pricing-period">/ forever</span>
+              </div>
+              <p class="card__pricing-desc">Everything you need to get started with AI-assisted development.</p>
+            </div>
+            <ul class="card__pricing-features">
+              <li><span class="check">&#10003;</span> Claude Code CLI integration</li>
+              <li><span class="check">&#10003;</span> Git worktree management</li>
+              <li><span class="check">&#10003;</span> Real-time streaming</li>
+              <li><span class="check">&#10003;</span> Cross-platform support</li>
+              <li><span class="check">&#10003;</span> Auto-updates</li>
+              <li><span class="check">&#10003;</span> Community support</li>
+            </ul>
+            <a href="/downloads.html" class="btn btn--primary btn--full">Get Started</a>
+          </div>
+          <div class="card card--pricing card--pricing-pro animate-on-scroll">
+            <div class="card__pricing-badge">Coming Soon</div>
+            <div class="card__pricing-header">
+              <h3 class="card__pricing-name">Pro</h3>
+              <div class="card__pricing-price">
+                <span class="card__pricing-amount">$12</span>
+                <span class="card__pricing-period">/ month</span>
+              </div>
+              <p class="card__pricing-desc">Advanced features for power users and teams.</p>
+            </div>
+            <ul class="card__pricing-features">
+              <li><span class="check">&#10003;</span> Everything in Free</li>
+              <li><span class="check">&#10003;</span> Multi-model support</li>
+              <li><span class="check">&#10003;</span> Custom prompt templates</li>
+              <li><span class="check">&#10003;</span> Team collaboration</li>
+              <li><span class="check">&#10003;</span> Priority support</li>
+              <li><span class="check">&#10003;</span> Advanced analytics</li>
+            </ul>
+            <button class="btn btn--ghost btn--full" disabled>Coming Soon</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta__inner animate-on-scroll">
+          <h2 class="cta__title">Ready to supercharge your workflow?</h2>
+          <p class="cta__subtitle">Download Catarina AI today and experience the future of desktop AI assistance.</p>
+          <a href="/downloads.html" class="btn btn--primary btn--lg">
+            <span class="btn__icon">&#8595;</span>
+            Download for Free
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__logo">
+          <span class="navbar__logo-icon">&#9670;</span>
+          Catarina AI
+        </a>
+        <p class="footer__tagline">Your AI-Powered Desktop Assistant</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4 class="footer__col-title">Product</h4>
+          <a href="#features">Features</a>
+          <a href="/downloads.html">Downloads</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Resources</h4>
+          <a href="https://github.com/jeancatarina/catarina-ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/jeancatarina/catarina-ai/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+          <a href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2026 Catarina AI. All rights reserved.</p>
+        <p class="footer__tech">Built with Tauri + React + Rust</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

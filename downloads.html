@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download Catarina AI - macOS, Windows, Linux</title>
+  <meta name="description" content="Download Catarina AI for your platform. Available for macOS (Apple Silicon & Intel), Windows, and Linux." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="navbar" id="navbar">
+    <nav class="navbar__inner container">
+      <a href="/" class="navbar__logo">
+        <span class="navbar__logo-icon">&#9670;</span>
+        Catarina AI
+      </a>
+      <ul class="navbar__links">
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/downloads.html" class="active">Downloads</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+      </ul>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-toggle__icon theme-toggle__icon--sun">&#9788;</span>
+          <span class="theme-toggle__icon theme-toggle__icon--moon">&#9790;</span>
+        </button>
+        <a href="/downloads.html" class="btn btn--sm btn--primary navbar__cta">Download</a>
+      </div>
+      <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul class="mobile-menu__links">
+      <li><a href="/#features">Features</a></li>
+      <li><a href="/downloads.html">Downloads</a></li>
+      <li><a href="/#pricing">Pricing</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- Downloads Hero -->
+    <section class="downloads-hero">
+      <div class="hero__glow"></div>
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <p class="section-label">Downloads</p>
+          <h1 class="section-title">Download <span class="gradient-text">Catarina AI</span></h1>
+          <p class="section-subtitle" id="os-detect-msg">Detecting your operating system...</p>
+          <div class="downloads-hero__version" id="version-badge">
+            <span class="downloads-hero__version-label">Latest:</span>
+            <span class="downloads-hero__version-value" id="version-value">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Cards -->
+    <section class="downloads">
+      <div class="container">
+        <div class="downloads__grid" id="downloads-grid">
+          <!-- macOS Apple Silicon -->
+          <div class="download-card animate-on-scroll" data-platform="macos-arm64">
+            <div class="download-card__header">
+              <span class="download-card__icon">&#127822;</span>
+              <div>
+                <h3 class="download-card__title">macOS</h3>
+                <p class="download-card__arch">Apple Silicon (M1/M2/M3)</p>
+              </div>
+              <span class="download-card__recommended" hidden>Recommended</span>
+            </div>
+            <div class="download-card__meta">
+              <span class="download-card__format">.dmg</span>
+              <span class="download-card__size" data-size="macos-arm64">--</span>
+            </div>
+            <a class="btn btn--primary btn--full download-card__btn" data-download="macos-arm64" href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer">
+              <span class="btn__icon">&#8595;</span>
+              Download for macOS (ARM64)
+            </a>
+          </div>
+
+          <!-- macOS Intel -->
+          <div class="download-card animate-on-scroll" data-platform="macos-x64">
+            <div class="download-card__header">
+              <span class="download-card__icon">&#127822;</span>
+              <div>
+                <h3 class="download-card__title">macOS</h3>
+                <p class="download-card__arch">Intel (x86_64)</p>
+              </div>
+              <span class="download-card__recommended" hidden>Recommended</span>
+            </div>
+            <div class="download-card__meta">
+              <span class="download-card__format">.dmg</span>
+              <span class="download-card__size" data-size="macos-x64">--</span>
+            </div>
+            <a class="btn btn--primary btn--full download-card__btn" data-download="macos-x64" href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer">
+              <span class="btn__icon">&#8595;</span>
+              Download for macOS (Intel)
+            </a>
+          </div>
+
+          <!-- Linux AppImage -->
+          <div class="download-card animate-on-scroll" data-platform="linux-appimage">
+            <div class="download-card__header">
+              <span class="download-card__icon">&#128039;</span>
+              <div>
+                <h3 class="download-card__title">Linux</h3>
+                <p class="download-card__arch">x86_64 (AppImage)</p>
+              </div>
+              <span class="download-card__recommended" hidden>Recommended</span>
+            </div>
+            <div class="download-card__meta">
+              <span class="download-card__format">.AppImage</span>
+              <span class="download-card__size" data-size="linux-appimage">--</span>
+            </div>
+            <a class="btn btn--primary btn--full download-card__btn" data-download="linux-appimage" href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer">
+              <span class="btn__icon">&#8595;</span>
+              Download AppImage
+            </a>
+          </div>
+
+          <!-- Linux .deb -->
+          <div class="download-card animate-on-scroll" data-platform="linux-deb">
+            <div class="download-card__header">
+              <span class="download-card__icon">&#128039;</span>
+              <div>
+                <h3 class="download-card__title">Linux</h3>
+                <p class="download-card__arch">x86_64 (Debian/Ubuntu)</p>
+              </div>
+              <span class="download-card__recommended" hidden>Recommended</span>
+            </div>
+            <div class="download-card__meta">
+              <span class="download-card__format">.deb</span>
+              <span class="download-card__size" data-size="linux-deb">--</span>
+            </div>
+            <a class="btn btn--primary btn--full download-card__btn" data-download="linux-deb" href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer">
+              <span class="btn__icon">&#8595;</span>
+              Download .deb Package
+            </a>
+          </div>
+
+          <!-- Windows EXE -->
+          <div class="download-card animate-on-scroll" data-platform="windows-exe">
+            <div class="download-card__header">
+              <span class="download-card__icon">&#128187;</span>
+              <div>
+                <h3 class="download-card__title">Windows</h3>
+                <p class="download-card__arch">x86_64 (Installer)</p>
+              </div>
+              <span class="download-card__recommended" hidden>Recommended</span>
+            </div>
+            <div class="download-card__meta">
+              <span class="download-card__format">.exe</span>
+              <span class="download-card__size" data-size="windows-exe">--</span>
+            </div>
+            <a class="btn btn--primary btn--full download-card__btn" data-download="windows-exe" href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer">
+              <span class="btn__icon">&#8595;</span>
+              Download .exe Installer
+            </a>
+          </div>
+
+          <!-- Windows MSI -->
+          <div class="download-card animate-on-scroll" data-platform="windows-msi">
+            <div class="download-card__header">
+              <span class="download-card__icon">&#128187;</span>
+              <div>
+                <h3 class="download-card__title">Windows</h3>
+                <p class="download-card__arch">x86_64 (MSI)</p>
+              </div>
+              <span class="download-card__recommended" hidden>Recommended</span>
+            </div>
+            <div class="download-card__meta">
+              <span class="download-card__format">.msi</span>
+              <span class="download-card__size" data-size="windows-msi">--</span>
+            </div>
+            <a class="btn btn--primary btn--full download-card__btn" data-download="windows-msi" href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer">
+              <span class="btn__icon">&#8595;</span>
+              Download .msi Package
+            </a>
+          </div>
+        </div>
+
+        <!-- Fallback -->
+        <div class="downloads__fallback" id="downloads-fallback" hidden>
+          <p>Could not fetch the latest release information.</p>
+          <a href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+            Visit Releases Page
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation Instructions -->
+    <section class="install-instructions">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <h2 class="section-title">Installation</h2>
+          <p class="section-subtitle">Quick setup guide for each platform.</p>
+        </div>
+        <div class="install-instructions__grid">
+          <div class="install-card animate-on-scroll">
+            <h3 class="install-card__title">&#127822; macOS</h3>
+            <ol class="install-card__steps">
+              <li>Download the <code>.dmg</code> file for your chip (Apple Silicon or Intel).</li>
+              <li>Open the <code>.dmg</code> and drag <strong>Catarina AI</strong> to your Applications folder.</li>
+              <li>On first launch, right-click the app and select <strong>Open</strong> to bypass Gatekeeper.</li>
+            </ol>
+          </div>
+          <div class="install-card animate-on-scroll">
+            <h3 class="install-card__title">&#128039; Linux</h3>
+            <ol class="install-card__steps">
+              <li><strong>AppImage:</strong> Make executable with <code>chmod +x *.AppImage</code>, then run.</li>
+              <li><strong>Debian/Ubuntu:</strong> Install with <code>sudo dpkg -i catarina-ai_*.deb</code>.</li>
+              <li>Launch from your application menu or terminal.</li>
+            </ol>
+          </div>
+          <div class="install-card animate-on-scroll">
+            <h3 class="install-card__title">&#128187; Windows</h3>
+            <ol class="install-card__steps">
+              <li>Download the <code>.exe</code> or <code>.msi</code> installer.</li>
+              <li>Run the installer and follow the setup wizard.</li>
+              <li>If SmartScreen warns you, click <strong>More info</strong> then <strong>Run anyway</strong>.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__logo">
+          <span class="navbar__logo-icon">&#9670;</span>
+          Catarina AI
+        </a>
+        <p class="footer__tagline">Your AI-Powered Desktop Assistant</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4 class="footer__col-title">Product</h4>
+          <a href="/#features">Features</a>
+          <a href="/downloads.html">Downloads</a>
+          <a href="/#pricing">Pricing</a>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Resources</h4>
+          <a href="https://github.com/jeancatarina/catarina-ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/jeancatarina/catarina-ai/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+          <a href="https://github.com/jeancatarina/catarina-ai/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2026 Catarina AI. All rights reserved.</p>
+        <p class="footer__tech">Built with Tauri + React + Rust</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/js/main.js"></script>
+  <script type="module" src="/js/downloads.js"></script>
+</body>
+</html>
