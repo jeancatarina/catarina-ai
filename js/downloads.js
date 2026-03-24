@@ -27,7 +27,7 @@ const SVG_ICONS = {
 
 // Platform display info
 const PLATFORM_INFO = {
-  'macos-arm64': { icon: SVG_ICONS.apple, title: 'macOS', arch: 'Apple Silicon (M1/M2/M3/M4)', format: '.dmg', btnLabel: 'Download for macOS (Apple Silicon)' },
+  'macos-arm64': { icon: SVG_ICONS.apple, title: 'macOS', arch: 'Apple Silicon', format: '.dmg', btnLabel: 'Download for macOS (Apple Silicon)' },
   'macos-x64': { icon: SVG_ICONS.apple, title: 'macOS', arch: 'Intel (x86_64)', format: '.dmg', btnLabel: 'Download for macOS (Intel)' },
   'linux-appimage': { icon: SVG_ICONS.linux, title: 'Linux', arch: 'x86_64 (AppImage)', format: '.AppImage', btnLabel: 'Download AppImage' },
   'linux-deb': { icon: SVG_ICONS.linux, title: 'Linux', arch: 'x86_64 (Debian/Ubuntu)', format: '.deb', btnLabel: 'Download .deb Package' },
