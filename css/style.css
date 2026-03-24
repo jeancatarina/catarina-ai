@@ -922,10 +922,19 @@ code {
   margin-bottom: 28px;
 }
 
+/* Platform SVG icons */
+.platform-icon {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
 .download-hero-card__icon {
-  font-size: 3.5rem;
+  font-size: 3rem;
   flex-shrink: 0;
   line-height: 1;
+  color: var(--color-text-primary);
+  opacity: 0.85;
 }
 
 .download-hero-card__title {
@@ -1011,9 +1020,10 @@ code {
 }
 
 .download-alt-card__icon {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   flex-shrink: 0;
   line-height: 1;
+  color: var(--color-text-secondary);
 }
 
 .download-alt-card__title {
@@ -1104,9 +1114,19 @@ code {
 }
 
 .install-card__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 1.0625rem;
   font-weight: 700;
   margin-bottom: 16px;
+}
+
+.install-card__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 .install-card__steps {

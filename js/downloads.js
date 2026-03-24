@@ -18,14 +18,21 @@ const PLATFORM_PATTERNS = {
   'windows-msi': { match: (name) => /windows.*x64.*\.msi$/i.test(name) || /\.msi$/i.test(name) },
 };
 
+// SVG Icons (monochrome, professional)
+const SVG_ICONS = {
+  apple: `<svg viewBox="0 0 24 24" fill="currentColor" class="platform-icon"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>`,
+  linux: `<svg viewBox="0 0 24 24" fill="currentColor" class="platform-icon"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602.01.199.059.389.137.564.259.56.848.59 1.314.596.3.003.548-.02.727-.048.096.131.226.256.418.376.405.254.878.379 1.344.379.543 0 1.074-.165 1.46-.555.155-.148.276-.338.372-.563h1.306c.096.225.217.415.372.563.386.39.917.555 1.46.555.466 0 .939-.125 1.344-.379.192-.12.322-.245.418-.376.179.028.427.051.727.048.466-.006 1.055-.036 1.314-.596.078-.175.127-.365.137-.564.004-.208-.042-.413-.132-.602-.206-.411-.551-.544-.864-.68-.312-.133-.598-.201-.797-.4-.213-.239-.403-.571-.663-.839a.424.424 0 00-.11-.135c.123-.805-.009-1.657-.287-2.489-.589-1.771-1.831-3.47-2.716-4.521-.75-1.067-.974-1.928-1.05-3.02-.065-1.491 1.056-5.965-3.17-6.298A5.042 5.042 0 0012.504 0zm-.218 1.53c.057-.003.12 0 .186.007 1.168.138 1.578 1.468 1.57 2.618-.008 1.197-.238 2.208-.88 3.312-.802 1.26-1.862 2.8-2.406 4.444-.258.788-.378 1.573-.278 2.267-.036-.003-.072-.004-.109-.004a1.86 1.86 0 00-.537.08c-.052-.467-.02-.937.115-1.393.432-1.444 1.335-2.9 2.127-4.148.79-1.228 1.068-2.353 1.083-3.622.016-1.292-.596-2.343-1.053-2.805a.764.764 0 01.182-.756z"/></svg>`,
+  windows: `<svg viewBox="0 0 24 24" fill="currentColor" class="platform-icon"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>`,
+};
+
 // Platform display info
 const PLATFORM_INFO = {
-  'macos-arm64': { icon: '🍎', title: 'macOS', arch: 'Apple Silicon (M1/M2/M3/M4)', format: '.dmg', btnLabel: 'Download for macOS (Apple Silicon)' },
-  'macos-x64': { icon: '🍎', title: 'macOS', arch: 'Intel (x86_64)', format: '.dmg', btnLabel: 'Download for macOS (Intel)' },
-  'linux-appimage': { icon: '🐧', title: 'Linux', arch: 'x86_64 (AppImage)', format: '.AppImage', btnLabel: 'Download AppImage' },
-  'linux-deb': { icon: '🐧', title: 'Linux', arch: 'x86_64 (Debian/Ubuntu)', format: '.deb', btnLabel: 'Download .deb Package' },
-  'windows-exe': { icon: '🪟', title: 'Windows', arch: 'x86_64 (Installer)', format: '.exe', btnLabel: 'Download .exe Installer' },
-  'windows-msi': { icon: '🪟', title: 'Windows', arch: 'x86_64 (MSI)', format: '.msi', btnLabel: 'Download .msi Package' },
+  'macos-arm64': { icon: SVG_ICONS.apple, title: 'macOS', arch: 'Apple Silicon (M1/M2/M3/M4)', format: '.dmg', btnLabel: 'Download for macOS (Apple Silicon)' },
+  'macos-x64': { icon: SVG_ICONS.apple, title: 'macOS', arch: 'Intel (x86_64)', format: '.dmg', btnLabel: 'Download for macOS (Intel)' },
+  'linux-appimage': { icon: SVG_ICONS.linux, title: 'Linux', arch: 'x86_64 (AppImage)', format: '.AppImage', btnLabel: 'Download AppImage' },
+  'linux-deb': { icon: SVG_ICONS.linux, title: 'Linux', arch: 'x86_64 (Debian/Ubuntu)', format: '.deb', btnLabel: 'Download .deb Package' },
+  'windows-exe': { icon: SVG_ICONS.windows, title: 'Windows', arch: 'x86_64 (Installer)', format: '.exe', btnLabel: 'Download .exe Installer' },
+  'windows-msi': { icon: SVG_ICONS.windows, title: 'Windows', arch: 'x86_64 (MSI)', format: '.msi', btnLabel: 'Download .msi Package' },
 };
 
 // Group platforms by OS family
