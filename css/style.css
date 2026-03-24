@@ -1377,6 +1377,212 @@ code {
    GPU-accelerated with transform/opacity only
    ============================================ */
 
+/* ---------- RAM Comparison Chart ---------- */
+.ram-comparison {
+  width: 100%;
+  max-width: 480px;
+  padding: 28px 24px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.ram-comparison::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-accent-start), var(--color-accent-end), transparent);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.ram-comparison__header {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ram-comparison__title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.ram-comparison__subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+}
+
+.ram-comparison__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ram-bar {
+  display: grid;
+  grid-template-columns: 110px 1fr 70px;
+  align-items: center;
+  gap: 10px;
+}
+
+.ram-bar__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ram-bar__track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+[data-theme="light"] .ram-bar__track {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.ram-bar__fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #ef4444, #f87171);
+  width: 0;
+  transform-origin: left;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: width;
+}
+
+.animate-on-scroll.visible .ram-bar__fill {
+  width: var(--bar-width);
+}
+
+.ram-bar__fill--accent {
+  background: linear-gradient(90deg, var(--color-accent-start), var(--color-accent-end));
+}
+
+.ram-bar__value {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ram-bar__value--accent {
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.ram-comparison__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+}
+
+.ram-comparison__total-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+}
+
+.ram-comparison__total-value {
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ram-comparison__total-value--bad {
+  color: #f87171;
+}
+
+.ram-comparison__total-value--good {
+  background: linear-gradient(135deg, var(--color-accent-start), var(--color-accent-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1rem;
+}
+
+.ram-comparison__divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.ram-comparison__divider::before,
+.ram-comparison__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+.ram-comparison__divider span {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-tertiary);
+}
+
+.ram-bar--catarina .ram-bar__label {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.ram-bar--catarina .ram-bar__track {
+  height: 12px;
+  background: rgba(196, 149, 106, 0.08);
+}
+
+/* Stagger the bar animations */
+.animate-on-scroll.visible .ram-bar:nth-child(1) .ram-bar__fill { transition-delay: 0.1s; }
+.animate-on-scroll.visible .ram-bar:nth-child(2) .ram-bar__fill { transition-delay: 0.2s; }
+.animate-on-scroll.visible .ram-bar:nth-child(3) .ram-bar__fill { transition-delay: 0.3s; }
+.animate-on-scroll.visible .ram-bar:nth-child(4) .ram-bar__fill { transition-delay: 0.4s; }
+.animate-on-scroll.visible .ram-bar:nth-child(5) .ram-bar__fill { transition-delay: 0.5s; }
+.animate-on-scroll.visible .ram-bar:nth-child(6) .ram-bar__fill { transition-delay: 0.6s; }
+.animate-on-scroll.visible .ram-bar:nth-child(7) .ram-bar__fill { transition-delay: 0.7s; }
+.animate-on-scroll.visible .ram-bar:nth-child(8) .ram-bar__fill { transition-delay: 0.8s; }
+
+/* Catarina bar animates last with a bigger delay */
+.animate-on-scroll.visible .ram-bar--catarina .ram-bar__fill {
+  transition-delay: 1.2s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ram-comparison {
+    max-width: 100%;
+  }
+
+  .ram-bar {
+    grid-template-columns: 90px 1fr 60px;
+    gap: 8px;
+  }
+
+  .ram-bar__label {
+    font-size: 0.6875rem;
+  }
+}
+
 /* ---------- Hero Particles Canvas ---------- */
 .hero__particles {
   position: absolute;

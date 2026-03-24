@@ -348,9 +348,9 @@
           <div class="feature-row__text">
             <span class="feature-tag feature-tag--rust">Rust</span>
             <h3 class="feature-row__title">Built with Rust. Runs on Your Machine.</h3>
-            <p class="feature-row__desc">Most developers juggle 10+ apps &mdash; a chat client, a Git GUI, a terminal, Postman, a notes app, a timer, a calendar&hellip; each one eating 200&ndash;500 MB of RAM. That is 2&ndash;5 GB wasted. Catarina Claude replaces them all in a single Rust-powered app using ~80 MB. Your machine stays fast, your data stays yours.</p>
+            <p class="feature-row__desc">Most developers run 8+ separate apps to get through the day &mdash; burning through gigabytes of RAM. Catarina Claude replaces them all in a single Rust-powered app. Your machine stays fast, your data stays yours.</p>
             <ul class="feature-list">
-              <li>Written in Rust &mdash; native speed, minimal memory footprint (~80 MB vs 2&ndash;5 GB for 10 separate apps)</li>
+              <li>Written in Rust &mdash; native speed, minimal memory footprint</li>
               <li>Everything runs locally &mdash; your code, conversations, and data never leave your machine</li>
               <li>Zero telemetry, zero tracking &mdash; privacy first, no exceptions</li>
               <li>Cross-platform: macOS (ARM + Intel), Windows, Linux</li>
@@ -359,14 +359,68 @@
             </ul>
           </div>
           <div class="feature-row__visual">
-            <div class="feature-visual-card">
-              <div class="feature-icon">&#9889;</div>
-              <div class="feature-visual-card__lines">
-                <div class="feature-visual-card__line feature-visual-card__line--accent" style="width: 95%"></div>
-                <div class="feature-visual-card__line feature-visual-card__line--green" style="width: 90%"></div>
-                <div class="feature-visual-card__line feature-visual-card__line--green" style="width: 85%"></div>
-                <div class="feature-visual-card__line feature-visual-card__line--accent" style="width: 80%"></div>
-                <div class="feature-visual-card__line feature-visual-card__line--green" style="width: 92%"></div>
+            <div class="ram-comparison">
+              <div class="ram-comparison__header">
+                <span class="ram-comparison__title">RAM Usage Comparison</span>
+                <span class="ram-comparison__subtitle">Typical idle memory consumption</span>
+              </div>
+              <div class="ram-comparison__bars">
+                <div class="ram-bar ram-bar--other" data-app="Postman" data-ram="450">
+                  <div class="ram-bar__label">Postman</div>
+                  <div class="ram-bar__track"><div class="ram-bar__fill" style="--bar-width: 90%"></div></div>
+                  <div class="ram-bar__value">~450 MB</div>
+                </div>
+                <div class="ram-bar ram-bar--other" data-app="Claude Desktop" data-ram="380">
+                  <div class="ram-bar__label">Claude Desktop</div>
+                  <div class="ram-bar__track"><div class="ram-bar__fill" style="--bar-width: 76%"></div></div>
+                  <div class="ram-bar__value">~380 MB</div>
+                </div>
+                <div class="ram-bar ram-bar--other" data-app="GitKraken" data-ram="350">
+                  <div class="ram-bar__label">GitKraken</div>
+                  <div class="ram-bar__track"><div class="ram-bar__fill" style="--bar-width: 70%"></div></div>
+                  <div class="ram-bar__value">~350 MB</div>
+                </div>
+                <div class="ram-bar ram-bar--other" data-app="Terminal (iTerm2)" data-ram="200">
+                  <div class="ram-bar__label">iTerm2</div>
+                  <div class="ram-bar__track"><div class="ram-bar__fill" style="--bar-width: 40%"></div></div>
+                  <div class="ram-bar__value">~200 MB</div>
+                </div>
+                <div class="ram-bar ram-bar--other" data-app="Notion (Notes)" data-ram="320">
+                  <div class="ram-bar__label">Notion</div>
+                  <div class="ram-bar__track"><div class="ram-bar__fill" style="--bar-width: 64%"></div></div>
+                  <div class="ram-bar__value">~320 MB</div>
+                </div>
+                <div class="ram-bar ram-bar--other" data-app="Pomodoro App" data-ram="120">
+                  <div class="ram-bar__label">Pomodoro App</div>
+                  <div class="ram-bar__track"><div class="ram-bar__fill" style="--bar-width: 24%"></div></div>
+                  <div class="ram-bar__value">~120 MB</div>
+                </div>
+                <div class="ram-bar ram-bar--other" data-app="Calendar App" data-ram="180">
+                  <div class="ram-bar__label">Calendar App</div>
+                  <div class="ram-bar__track"><div class="ram-bar__fill" style="--bar-width: 36%"></div></div>
+                  <div class="ram-bar__value">~180 MB</div>
+                </div>
+                <div class="ram-bar ram-bar--other" data-app="Excalidraw" data-ram="250">
+                  <div class="ram-bar__label">Excalidraw</div>
+                  <div class="ram-bar__track"><div class="ram-bar__fill" style="--bar-width: 50%"></div></div>
+                  <div class="ram-bar__value">~250 MB</div>
+                </div>
+              </div>
+              <div class="ram-comparison__total">
+                <span class="ram-comparison__total-label">Total: 8 apps</span>
+                <span class="ram-comparison__total-value ram-comparison__total-value--bad">~2.25 GB</span>
+              </div>
+              <div class="ram-comparison__divider">
+                <span>vs</span>
+              </div>
+              <div class="ram-bar ram-bar--catarina">
+                <div class="ram-bar__label">Catarina Claude</div>
+                <div class="ram-bar__track"><div class="ram-bar__fill ram-bar__fill--accent" style="--bar-width: 16%"></div></div>
+                <div class="ram-bar__value ram-bar__value--accent">~80 MB</div>
+              </div>
+              <div class="ram-comparison__total">
+                <span class="ram-comparison__total-label">All 8 tools in 1 app</span>
+                <span class="ram-comparison__total-value ram-comparison__total-value--good">28x less RAM</span>
               </div>
             </div>
           </div>
