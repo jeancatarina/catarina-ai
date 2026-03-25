@@ -491,31 +491,51 @@ jobs:
       - name: Generate update.json
         shell: bash
         run: |
+          set -euo pipefail
           VERSION="${{ needs.validate.outputs.version }}"
           TAG="${{ needs.validate.outputs.tag }}"
           PUB_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           BASE_URL="https://github.com/catarina-claude/catarina-claude.github.io/releases/download/${TAG}"
 
+          # Read signature from .sig file — FAIL if missing
           read_sig() {
             local file="all-artifacts/$1"
-            if [ -f "$file" ]; then cat "$file"; else echo ""; fi
+            if [ -f "$file" ]; then
+              cat "$file"
+            else
+              echo "::error::Missing signature file: $1"
+              echo ""
+            fi
           }
 
           DARWIN_AARCH64_SIG=$(read_sig "catarina-claude-${VERSION}-macos-arm64.app.tar.gz.sig")
           DARWIN_X86_64_SIG=$(read_sig "catarina-claude-${VERSION}-macos-x64.app.tar.gz.sig")
           LINUX_X86_64_SIG=$(read_sig "catarina-claude-${VERSION}-linux-x64.AppImage.tar.gz.sig")
-          WINDOWS_X86_64_SIG=$(read_sig "catarina-claude-${VERSION}-windows-x64.msi.zip.sig")
 
-          if [ -z "$WINDOWS_X86_64_SIG" ]; then
-            WINDOWS_X86_64_SIG=$(read_sig "catarina-claude-${VERSION}-windows-x64.nsis.zip.sig")
+          # Windows: try NSIS first (default Tauri target), then MSI
+          WINDOWS_SIG=$(read_sig "catarina-claude-${VERSION}-windows-x64.nsis.zip.sig")
+          WIN_UPDATER_FILE="catarina-claude-${VERSION}-windows-x64.nsis.zip"
+          if [ -z "$WINDOWS_SIG" ]; then
+            WINDOWS_SIG=$(read_sig "catarina-claude-${VERSION}-windows-x64.msi.zip.sig")
+            WIN_UPDATER_FILE="catarina-claude-${VERSION}-windows-x64.msi.zip"
           fi
 
-          WIN_UPDATER_FILE="catarina-claude-${VERSION}-windows-x64.msi.zip"
-          if [ ! -f "all-artifacts/$WIN_UPDATER_FILE" ]; then
-            WIN_UPDATER_FILE="catarina-claude-${VERSION}-windows-x64.nsis.zip"
+          # Validate ALL signatures exist — never publish without them
+          MISSING=0
+          for SIG_NAME in "darwin-aarch64:$DARWIN_AARCH64_SIG" "darwin-x86_64:$DARWIN_X86_64_SIG" "linux-x86_64:$LINUX_X86_64_SIG" "windows-x86_64:$WINDOWS_SIG"; do
+            PLATFORM="${SIG_NAME%%:*}"
+            SIG_VALUE="${SIG_NAME#*:}"
+            if [ -z "$SIG_VALUE" ]; then
+              echo "::error::Empty signature for ${PLATFORM}. Updater will reject this update."
+              MISSING=$((MISSING + 1))
+            fi
+          done
+          if [ "$MISSING" -gt 0 ]; then
+            echo "::error::${MISSING} platform(s) missing signatures. Aborting update.json generation."
+            exit 1
           fi
 
-          cat > update.json << ENDJSON
+          cat > update.json <<EOF
           {
             "version": "${VERSION}",
             "notes": "Catarina Claude v${VERSION}",
@@ -534,15 +554,17 @@ jobs:
                 "url": "${BASE_URL}/catarina-claude-${VERSION}-linux-x64.AppImage.tar.gz"
               },
               "windows-x86_64": {
-                "signature": "${WINDOWS_X86_64_SIG}",
+                "signature": "${WINDOWS_SIG}",
                 "url": "${BASE_URL}/${WIN_UPDATER_FILE}"
               }
             }
           }
-          ENDJSON
+          EOF
 
-          echo "Generated update.json:"
-          cat update.json
+          # Validate JSON is parseable
+          python3 -c "import json; json.load(open('update.json'))" || { echo "::error::Generated invalid JSON"; exit 1; }
+          echo "✅ update.json generated with all signatures:"
+          python3 -c "import json; d=json.load(open('update.json')); [print(f'  {k}: sig={v[\"signature\"][:20]}...') for k,v in d['platforms'].items()]"
 
       - name: Create release on catarina-claude.github.io
         env:
