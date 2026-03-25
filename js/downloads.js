@@ -25,6 +25,16 @@ const SVG_ICONS = {
   windows: `<svg viewBox="0 0 24 24" fill="currentColor" class="platform-icon"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>`,
 };
 
+// CLI install commands per platform
+const CLI_COMMANDS = {
+  'macos-arm64': 'brew tap catarina-claude/apps && brew install --cask catarina-claude',
+  'macos-x64': 'brew tap catarina-claude/apps && brew install --cask catarina-claude',
+  'linux-appimage': 'curl -fsSL https://github.com/catarina-claude/catarina-claude.github.io/releases/latest/download/catarina-claude-linux-x64.AppImage -o catarina-claude.AppImage && chmod +x catarina-claude.AppImage',
+  'linux-deb': 'curl -fsSL https://github.com/catarina-claude/catarina-claude.github.io/releases/latest/download/catarina-claude-linux-x64.deb -o catarina-claude.deb && sudo dpkg -i catarina-claude.deb',
+  'windows-exe': 'winget install catarina-claude',
+  'windows-msi': 'winget install catarina-claude --installer-type msi',
+};
+
 // Platform display info
 const PLATFORM_INFO = {
   'macos-arm64': { icon: SVG_ICONS.apple, title: 'macOS', arch: 'Apple Silicon', format: '.dmg', btnLabel: 'Download for macOS (Apple Silicon)' },
@@ -110,6 +120,53 @@ function formatBytes(bytes) {
   return `${mb.toFixed(1)} MB`;
 }
 
+// ---------- CLI Snippet Builder ----------
+function buildCLISnippet(platformKey) {
+  const cmd = CLI_COMMANDS[platformKey];
+  if (!cmd) return '';
+  return `
+    <div class="cli-snippet">
+      <div class="cli-snippet__header">
+        <span class="cli-snippet__label">Terminal</span>
+        <button class="cli-snippet__copy" data-copy="${platformKey}" aria-label="Copy command" title="Copy to clipboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cli-snippet__copy-icon"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cli-snippet__check-icon"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+      <div class="cli-snippet__body">
+        <code class="cli-snippet__code" id="cli-cmd-${platformKey}">$ ${cmd}</code>
+      </div>
+    </div>
+  `;
+}
+
+// Copy to clipboard handler
+function initCopyButtons() {
+  document.querySelectorAll('.cli-snippet__copy').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const platformKey = btn.dataset.copy;
+      const cmd = CLI_COMMANDS[platformKey];
+      if (!cmd) return;
+
+      try {
+        await navigator.clipboard.writeText(cmd);
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+      } catch {
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = cmd;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+      }
+    });
+  });
+}
+
 // ---------- Dynamic Layout Builder ----------
 function buildDownloadsLayout(detectedOS) {
   const container = document.getElementById('downloads-dynamic');
@@ -165,6 +222,7 @@ function buildDownloadsLayout(detectedOS) {
         </div>
       </div>
       ${macInstallerHTML}
+      ${buildCLISnippet(primaryPlatform)}
     </div>
   `;
 
@@ -175,23 +233,26 @@ function buildDownloadsLayout(detectedOS) {
         const info = PLATFORM_INFO[platformKey];
         return `
       <div class="download-alt-card animate-on-scroll" data-platform="${platformKey}">
-        <div class="download-alt-card__left">
-          <span class="download-alt-card__icon">${info.icon}</span>
-          <div>
-            <h3 class="download-alt-card__title">${info.title}</h3>
-            <p class="download-alt-card__arch">${info.arch}</p>
+        <div class="download-alt-card__top">
+          <div class="download-alt-card__left">
+            <span class="download-alt-card__icon">${info.icon}</span>
+            <div>
+              <h3 class="download-alt-card__title">${info.title}</h3>
+              <p class="download-alt-card__arch">${info.arch}</p>
+            </div>
+          </div>
+          <div class="download-alt-card__right">
+            <div class="download-alt-card__meta">
+              <span class="download-card__format">${info.format}</span>
+              <span class="download-card__size" data-size="${platformKey}">--</span>
+            </div>
+            <a class="btn btn--sm btn--outline download-alt-card__btn" data-download="${platformKey}" href="${RELEASES_URL}" target="_blank" rel="noopener noreferrer">
+              <span class="btn__icon">↓</span>
+              Download
+            </a>
           </div>
         </div>
-        <div class="download-alt-card__right">
-          <div class="download-alt-card__meta">
-            <span class="download-card__format">${info.format}</span>
-            <span class="download-card__size" data-size="${platformKey}">--</span>
-          </div>
-          <a class="btn btn--sm btn--outline download-alt-card__btn" data-download="${platformKey}" href="${RELEASES_URL}" target="_blank" rel="noopener noreferrer">
-            <span class="btn__icon">↓</span>
-            Download
-          </a>
-        </div>
+        ${buildCLISnippet(platformKey)}
       </div>
     `;
       }
@@ -210,9 +271,11 @@ function buildDownloadsLayout(detectedOS) {
 
   // Re-observe for scroll animations (elements were just created)
   container.querySelectorAll('.animate-on-scroll').forEach((el) => {
-    // Small delay so the observer catches them after DOM insertion
     requestAnimationFrame(() => el.classList.add('visible'));
   });
+
+  // Init copy buttons
+  initCopyButtons();
 }
 
 // ---------- Fetch and Render ----------
