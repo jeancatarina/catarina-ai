@@ -1230,7 +1230,7 @@ code {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 24px;
@@ -1239,6 +1239,14 @@ code {
   -webkit-backdrop-filter: blur(0px);
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
   overflow-y: auto;
+}
+
+.modal-overlay[hidden] {
+  display: none !important;
+}
+
+.modal-overlay:not([hidden]) {
+  display: flex;
 }
 
 .modal-overlay.visible {
