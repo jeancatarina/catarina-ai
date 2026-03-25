@@ -39,6 +39,9 @@ jobs:
         env:
           DISPATCH_SECRET: ${{ secrets.DISPATCH_SECRET }}
         run: |
+          set -euo pipefail
+          echo "::add-mask::${DISPATCH_SECRET}"
+
           # Require all payload fields
           VERSION="${{ github.event.client_payload.version }}"
           SHA="${{ github.event.client_payload.sha }}"
@@ -89,20 +92,35 @@ jobs:
         env:
           PRIVATE_TOKEN: ${{ secrets.CATARINA_PRIVATE_READ_TOKEN }}
         run: |
-          # Clone with depth=1 at exact SHA - minimal exposure
+          set -euo pipefail
+
+          # Mask the token and source paths from logs
+          echo "::add-mask::${PRIVATE_TOKEN}"
+          echo "::add-mask::$(pwd)/source"
+
+          # Clone with depth=1 - suppress all output to prevent code leaks
           git clone --depth=1 \
             "https://x-access-token:${PRIVATE_TOKEN}@github.com/jeancatarina/catarina-claude.git" \
-            source 2>&1 | grep -v "${PRIVATE_TOKEN}" || true
+            source 2>&1 | head -1 || true
 
           cd source
-          git fetch --depth=1 origin "${{ needs.validate.outputs.sha }}" 2>/dev/null || true
-          git checkout "${{ needs.validate.outputs.sha }}" 2>/dev/null || true
 
-          # Verify we got the right commit
+          # Fetch and checkout exact SHA - MUST succeed (no || true)
+          EXPECTED_SHA="${{ needs.validate.outputs.sha }}"
+          git fetch --depth=1 origin "$EXPECTED_SHA" 2>/dev/null
+          git checkout "$EXPECTED_SHA" 2>/dev/null
+
+          # Hard verify SHA matches
           ACTUAL_SHA=$(git rev-parse HEAD)
-          echo "Checked out: ${ACTUAL_SHA:0:8}"
+          if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
+            echo "::error::SHA mismatch! Expected ${EXPECTED_SHA:0:8}, got ${ACTUAL_SHA:0:8}. Aborting."
+            exit 1
+          fi
+          echo "✅ Checked out: ${ACTUAL_SHA:0:8}"
 
-          # Immediately revoke token from environment
+          # Purge credentials from git config and credential store
+          git remote set-url origin "https://REDACTED@github.com/redacted/redacted.git"
+          git config --unset-all http.https://github.com/.extraheader 2>/dev/null || true
           unset PRIVATE_TOKEN
 
       - name: Setup Node.js
@@ -190,13 +208,28 @@ jobs:
         env:
           PRIVATE_TOKEN: ${{ secrets.CATARINA_PRIVATE_READ_TOKEN }}
         run: |
+          set -euo pipefail
+          echo "::add-mask::${PRIVATE_TOKEN}"
+          echo "::add-mask::$(pwd)/source"
+
           git clone --depth=1 \
             "https://x-access-token:${PRIVATE_TOKEN}@github.com/jeancatarina/catarina-claude.git" \
-            source 2>&1 | grep -v "${PRIVATE_TOKEN}" || true
+            source 2>&1 | head -1 || true
 
           cd source
-          git fetch --depth=1 origin "${{ needs.validate.outputs.sha }}" 2>/dev/null || true
-          git checkout "${{ needs.validate.outputs.sha }}" 2>/dev/null || true
+          EXPECTED_SHA="${{ needs.validate.outputs.sha }}"
+          git fetch --depth=1 origin "$EXPECTED_SHA" 2>/dev/null
+          git checkout "$EXPECTED_SHA" 2>/dev/null
+
+          ACTUAL_SHA=$(git rev-parse HEAD)
+          if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
+            echo "::error::SHA mismatch! Expected ${EXPECTED_SHA:0:8}, got ${ACTUAL_SHA:0:8}. Aborting."
+            exit 1
+          fi
+          echo "✅ Checked out: ${ACTUAL_SHA:0:8}"
+
+          git remote set-url origin "https://REDACTED@github.com/redacted/redacted.git"
+          git config --unset-all http.https://github.com/.extraheader 2>/dev/null || true
           unset PRIVATE_TOKEN
 
       - name: Setup Node.js
@@ -272,13 +305,28 @@ jobs:
         env:
           PRIVATE_TOKEN: ${{ secrets.CATARINA_PRIVATE_READ_TOKEN }}
         run: |
+          set -euo pipefail
+          echo "::add-mask::${PRIVATE_TOKEN}"
+          echo "::add-mask::$(pwd)/source"
+
           git clone --depth=1 \
             "https://x-access-token:${PRIVATE_TOKEN}@github.com/jeancatarina/catarina-claude.git" \
-            source 2>&1 | grep -v "${PRIVATE_TOKEN}" || true
+            source 2>&1 | head -1 || true
 
           cd source
-          git fetch --depth=1 origin "${{ needs.validate.outputs.sha }}" 2>/dev/null || true
-          git checkout "${{ needs.validate.outputs.sha }}" 2>/dev/null || true
+          EXPECTED_SHA="${{ needs.validate.outputs.sha }}"
+          git fetch --depth=1 origin "$EXPECTED_SHA" 2>/dev/null
+          git checkout "$EXPECTED_SHA" 2>/dev/null
+
+          ACTUAL_SHA=$(git rev-parse HEAD)
+          if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
+            echo "::error::SHA mismatch! Expected ${EXPECTED_SHA:0:8}, got ${ACTUAL_SHA:0:8}. Aborting."
+            exit 1
+          fi
+          echo "✅ Checked out: ${ACTUAL_SHA:0:8}"
+
+          git remote set-url origin "https://REDACTED@github.com/redacted/redacted.git"
+          git config --unset-all http.https://github.com/.extraheader 2>/dev/null || true
           unset PRIVATE_TOKEN
 
       - name: Setup Node.js
@@ -364,6 +412,14 @@ jobs:
       - name: List all artifacts
         run: ls -la all-artifacts/
 
+      - name: Generate SHA256 checksums
+        run: |
+          cd all-artifacts
+          sha256sum * > ../SHA256SUMS.txt 2>/dev/null || shasum -a 256 * > ../SHA256SUMS.txt
+          echo "📋 Checksums:"
+          cat ../SHA256SUMS.txt
+          cp ../SHA256SUMS.txt ./SHA256SUMS.txt
+
       - name: Generate update.json
         shell: bash
         run: |
@@ -424,6 +480,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CATARINA_RELEASE_TOKEN }}
         run: |
+          echo "::add-mask::${GH_TOKEN}"
           VERSION="${{ needs.validate.outputs.version }}"
           TAG="${{ needs.validate.outputs.tag }}"
           SHA="${{ needs.validate.outputs.sha }}"
@@ -453,6 +510,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CATARINA_RELEASE_TOKEN }}
         run: |
+          echo "::add-mask::${GH_TOKEN}"
           git clone --depth=1 https://x-access-token:${GH_TOKEN}@github.com/catarina-claude/catarina-claude.github.io.git site-repo
           cd site-repo
           cp ../update.json ./update.json
@@ -467,6 +525,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.CATARINA_RELEASE_TOKEN }}
         run: |
+          echo "::add-mask::${GH_TOKEN}"
           VERSION="${{ needs.validate.outputs.version }}"
 
           if [ -z "$GH_TOKEN" ]; then
