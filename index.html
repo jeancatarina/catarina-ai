@@ -451,7 +451,7 @@
         <div class="section-header animate-on-scroll">
           <p class="section-label">Pricing</p>
           <h2 class="section-title">All this power.<br /><span class="gradient-text">Free to start.</span></h2>
-          <p class="section-subtitle">No credit card. No trial limits. Just download and go.</p>
+          <p class="section-subtitle">No credit card required. Every feature included. Limits only on simultaneous active items.</p>
         </div>
         <div class="pricing__grid">
           <div class="card card--pricing animate-on-scroll">
@@ -461,7 +461,7 @@
                 <span class="card__pricing-amount">$0</span>
                 <span class="card__pricing-period">/ forever</span>
               </div>
-              <p class="card__pricing-desc">The full Catarina Claude experience. Every feature. No limits. Everything runs on your machine.</p>
+              <p class="card__pricing-desc">Every feature included. Limits only on how many items you can have active at once &mdash; archive to free slots anytime.</p>
             </div>
             <ul class="card__pricing-features">
               <li><span class="check">&#10003;</span> AI chat with Claude (Opus, Sonnet, Haiku)</li>
@@ -470,28 +470,31 @@
               <li><span class="check">&#10003;</span> HTTP request collections &amp; environments</li>
               <li><span class="check">&#10003;</span> Pomodoro, planner, calendar, notes</li>
               <li><span class="check">&#10003;</span> Excalidraw diagrams &amp; link board</li>
-              <li><span class="check">&#10003;</span> 15 language support</li>
-              <li><span class="check">&#10003;</span> Cross-platform (macOS, Windows, Linux)</li>
-              <li><span class="check">&#10003;</span> Auto-updates &amp; zero telemetry</li>
-              <li><span class="check">&#10003;</span> 100% local &mdash; your data never leaves your machine</li>
+              <li><span class="check">&#10003;</span> 5 active workspaces, 5 terminals, 5 PR reviews</li>
+              <li><span class="check">&#10003;</span> 3 request collections, 5 templates, 5 diagrams</li>
+              <li><span class="check">&#10003;</span> Cross-platform &amp; 100% local &mdash; zero telemetry</li>
             </ul>
             <a href="./downloads.html" class="btn btn--primary btn--full">Download Free</a>
           </div>
           <div class="card card--pricing card--pricing-pro animate-on-scroll">
-            <div class="card__pricing-badge">Coming Soon</div>
+            <div class="card__pricing-badge">14-day free trial</div>
             <div class="card__pricing-header">
               <h3 class="card__pricing-name">Pro</h3>
               <div class="card__pricing-price">
-                <span class="card__pricing-amount">$5</span>
+                <span class="card__pricing-amount" id="pro-price-amount">$4.90</span>
                 <span class="card__pricing-period">/ month</span>
               </div>
-              <p class="card__pricing-desc">Everything in Free, plus cloud sync to keep your workspaces in sync across devices.</p>
+              <p class="card__pricing-desc">Unlimited everything. No caps on simultaneous items, plus cloud sync and version history.</p>
             </div>
             <ul class="card__pricing-features">
               <li><span class="check">&#10003;</span> Everything in Free</li>
-              <li><span class="check">&#10003;</span> Cloud sync &mdash; seamlessly sync settings, collections, and chat history across all your devices</li>
+              <li><span class="check">&#10003;</span> Unlimited workspaces, terminals, and everything else</li>
+              <li><span class="check">&#10003;</span> Cloud sync &mdash; seamlessly sync across all your devices</li>
+              <li><span class="check">&#10003;</span> 30-day version history</li>
+              <li><span class="check">&#10003;</span> Priority support</li>
             </ul>
-            <button class="btn btn--ghost btn--full" disabled>Coming Soon</button>
+            <a href="./downloads.html" class="btn btn--ghost btn--full">Start Free Trial</a>
+            <p class="card__pricing-note" id="pro-price-yearly"></p>
           </div>
         </div>
       </div>
@@ -555,5 +558,23 @@
 
   <script type="module" src="./js/main.js"></script>
   <script type="module" src="./js/animations.js"></script>
+  <script>
+    // Fetch localized Paddle prices and update the pricing section
+    (async function loadPrices() {
+      try {
+        const res = await fetch("https://awglxdeqzkursbmotjpm.supabase.co/functions/v1/get-prices");
+        if (!res.ok) return;
+        const data = await res.json();
+        const amountEl = document.getElementById("pro-price-amount");
+        const yearlyEl = document.getElementById("pro-price-yearly");
+        if (amountEl && data.monthly?.amount) {
+          amountEl.textContent = data.monthly.amount;
+        }
+        if (yearlyEl && data.yearly?.amount) {
+          yearlyEl.textContent = "or " + data.yearly.amount + "/year" + (data.discount > 0 ? " (save " + data.discount + "%)" : "");
+        }
+      } catch { /* keep USD defaults */ }
+    })();
+  </script>
 </body>
 </html>
