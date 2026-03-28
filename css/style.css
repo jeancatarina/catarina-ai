@@ -757,6 +757,26 @@ code {
   color: var(--color-text);
 }
 
+/* Skeleton loader for prices */
+@keyframes pricing-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.pricing-skeleton {
+  display: inline-block;
+  height: 1em;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: pricing-shimmer 1.5s ease-in-out infinite;
+  vertical-align: middle;
+}
+
 /* Trial step note below CTA */
 .card__pricing-trial-note {
   margin-top: 12px;
