@@ -34,6 +34,7 @@ jobs:
   # ─────────────────────────────────────────────────────────────
   validate:
     runs-on: ubuntu-latest
+    environment: build-gate
     outputs:
       version: ${{ steps.check.outputs.version }}
       tag: ${{ steps.check.outputs.tag }}
